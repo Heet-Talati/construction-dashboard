@@ -20,11 +20,15 @@
         "vue-tsc": "^1.8.27"
     },
     "dependencies": {
+        "@vee-validate/zod": "^4.12.6",
+        "@vueuse/core": "^10.9.0",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.1.0",
         "lucide-vue-next": "^0.362.0",
         "radix-vue": "^1.5.3",
         "tailwind-merge": "^2.2.2",
-        "tailwindcss-animate": "^1.0.7"
+        "tailwindcss-animate": "^1.0.7",
+        "vee-validate": "^4.12.6",
+        "zod": "^3.22.4"
     }
 }

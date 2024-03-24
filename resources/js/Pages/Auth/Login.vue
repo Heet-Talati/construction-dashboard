@@ -1,92 +1,127 @@
 <script setup lang="ts">
-import Checkbox from '@/Components/Checkbox.vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import Login from "../../Components/forms/Login.vue";
+import Label from "../../Components/ui/label/Label.vue";
+import { Link } from "@inertiajs/vue3";
 
-defineProps<{
-    canResetPassword?: boolean;
-    status?: string;
-}>();
+// defineProps<{
+//     canResetPassword?: boolean;
+//     status?: string;
+// }>();
 
-const form = useForm({
-    email: '',
-    password: '',
-    remember: false,
-});
+// const form = useForm({
+//     email: "",
+//     password: "",
+//     remember: false,
+// });
 
-const submit = () => {
-    form.post(route('login'), {
-        onFinish: () => {
-            form.reset('password');
-        },
-    });
-};
+// const submit = () => {
+//     form.post(route("login"), {
+//         onFinish: () => {
+//             form.reset("password");
+//         },
+//     });
+// };
 </script>
 
 <template>
-    <GuestLayout>
-        <Head title="Log in" />
-
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-            {{ status }}
+    <div class="container">
+        <div class="left">
+            <div class="content">
+                <Label>Log in to</Label>
+                <div class="logo">
+                    <img src="../../../../public/assets/LogoD.png" alt="Logo" />
+                </div>
+                <Login />
+                <div class="links">
+                    <Link :href="route('password.request')">
+                        Forgot your password?
+                    </Link>
+                    <p class="mini-text">
+                        Don't have an account?
+                        <span class="link"
+                            ><Link :href="route('register')">
+                                Register
+                            </Link></span
+                        >
+                    </p>
+                </div>
+            </div>
         </div>
-
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
+        <div class="right">
+            <div class="logo">
+                <img src="../../../../public/assets/LogoL.png" alt="Logo" />
             </div>
-
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="current-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
-
-            <div class="block mt-4">
-                <label class="flex items-center">
-                    <Checkbox name="remember" v-model:checked="form.remember" />
-                    <span class="ms-2 text-sm text-gray-600">Remember me</span>
-                </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <Link
-                    v-if="canResetPassword"
-                    :href="route('password.request')"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                    Forgot your password?
-                </Link>
-
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
-                </PrimaryButton>
-            </div>
-        </form>
-    </GuestLayout>
+        </div>
+    </div>
 </template>
+
+<style scoped>
+.container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    max-width: 100%;
+    /* max-width: 1280px; */
+
+    padding: 0;
+}
+
+.left {
+    height: 100%;
+    width: 60%;
+    background-color: #fff;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    width: 480px;
+    min-width: 400px;
+    padding: 64px 40px;
+    border: 1px solid #d4d4d8;
+    border-radius: 8px;
+}
+.content Label {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+}
+.content > div.logo {
+    margin: 0;
+}
+
+.links {
+    font-family: "Inter", sans-serif;
+    margin-top: 16px;
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.links .mini-text {
+    color: #71717a;
+}
+.mini-text .link {
+    color: black;
+}
+
+.right {
+    height: 100%;
+    width: 40%;
+    background-color: #18181b;
+
+    display: flex;
+    justify-content: right;
+}
+.logo {
+    width: 150px;
+    margin: 30px 50px;
+}
+</style>

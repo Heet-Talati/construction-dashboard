@@ -1,105 +1,101 @@
 <script setup lang="ts">
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
-
-const form = useForm({
-    name: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
-});
-
-const submit = () => {
-    form.post(route('register'), {
-        onFinish: () => {
-            form.reset('password', 'password_confirmation');
-        },
-    });
-};
+import { Head, Link } from "@inertiajs/vue3";
+import Register from "../../Components/forms/Register.vue";
+import Label from "../../Components/ui/label/Label.vue";
 </script>
 
 <template>
-    <GuestLayout>
-        <Head title="Register" />
+    <Head title="Register" />
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="name" value="Name" />
-
-                <TextInput
-                    id="name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    v-model="form.name"
-                    required
-                    autofocus
-                    autocomplete="name"
-                />
-
-                <InputError class="mt-2" :message="form.errors.name" />
+    <div class="container">
+        <div class="left">
+            <div class="content">
+                <Label>Create your account for</Label>
+                <div class="logo">
+                    <img src="../../../../public/assets/LogoD.png" alt="Logo" />
+                </div>
+                <Register />
+                <div class="links">
+                    <p class="mini-text">
+                        Already have an account?
+                        <span class="link">
+                            <Link :href="route('login')">Log in</Link>
+                        </span>
+                    </p>
+                </div>
             </div>
-
-            <div class="mt-4">
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
+        </div>
+        <div class="right">
+            <div class="logo">
+                <img src="../../../../public/assets/LogoL.png" alt="Logo" />
             </div>
-
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="new-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
-
-                <TextInput
-                    id="password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password_confirmation"
-                    required
-                    autocomplete="new-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password_confirmation" />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <Link
-                    :href="route('login')"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                    Already registered?
-                </Link>
-
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Register
-                </PrimaryButton>
-            </div>
-        </form>
-    </GuestLayout>
+        </div>
+    </div>
 </template>
+
+<style scoped>
+.container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    max-width: 100%;
+    /* max-width: 1280px; */
+
+    padding: 0;
+}
+
+.left {
+    height: 100%;
+    width: 60%;
+    background-color: #fff;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    width: 480px;
+    min-width: 400px;
+    padding: 64px 40px;
+    border: 1px solid #d4d4d8;
+    border-radius: 8px;
+}
+.content Label {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+}
+.content > div.logo {
+    margin: 0;
+}
+
+.links {
+    margin-top: 16px;
+    font-size: 12px;
+    font-weight: 500;
+}
+.links .mini-text {
+    color: #71717a;
+}
+.mini-text .link {
+    color: black;
+}
+
+.right {
+    height: 100%;
+    width: 40%;
+    background-color: #18181b;
+
+    display: flex;
+    justify-content: right;
+}
+.logo {
+    width: 150px;
+    margin: 30px 50px;
+}
+</style>

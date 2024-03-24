@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Head, Link } from "@inertiajs/vue3";
+import { Button } from "@/Components/ui/button";
 
 defineProps<{
     canLogin?: boolean;
@@ -17,6 +18,10 @@ function handleImageError() {
 </script>
 
 <template>
+    <Button><a href="/dashboard">Dashboard</a></Button>
+</template>
+
+<!-- <template>
     <Head title="Welcome" />
     <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
         <img
@@ -368,4 +373,4 @@ function handleImageError() {
             </div>
         </div>
     </div>
-</template>
+</template> -->
