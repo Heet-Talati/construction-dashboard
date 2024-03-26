@@ -16,33 +16,124 @@ import { Link } from "@inertiajs/vue3";
             <ProfilePic />
             <div class="pages">
                 <Link :href="route('dashboard')">
-                    <div class="tabs">
-                        <DashboardIcon class="icon" />
-                        <p>Dashboard</p>
+                    <div
+                        :class="{
+                            tabsactive: $page.url === '/dashboard',
+                            tabs: true,
+                        }"
+                    >
+                        <DashboardIcon
+                            :class="{
+                                iconactive: $page.url === '/dashboard',
+                                icon: true,
+                            }"
+                        />
+                        <p
+                            :class="{
+                                pactive: $page.url === '/dashboard',
+                                tabsp: true,
+                            }"
+                        >
+                            Dashboard
+                        </p>
                     </div>
                 </Link>
                 <Link :href="route('tasks')">
-                    <div class="tabs">
-                        <Pencil2Icon class="icon" />
-                        <p>Tasks</p>
+                    <div
+                        :class="{
+                            tabsactive: $page.url === '/tasks',
+                            tabs: true,
+                        }"
+                    >
+                        <Pencil2Icon
+                            :class="{
+                                iconactive: $page.url === '/tasks',
+                                icon: true,
+                            }"
+                        />
+                        <p
+                            :class="{
+                                pactive: $page.url === '/tasks',
+                                tabsp: true,
+                            }"
+                        >
+                            Tasks
+                        </p>
                     </div>
                 </Link>
-                <div class="tabs">
-                    <ChatBubbleIcon class="icon" />
-                    <p>Chat</p>
-                </div>
+                <Link :href="route('chat')">
+                    <div
+                        :class="{
+                            tabsactive: $page.url === '/chat',
+                            tabs: true,
+                        }"
+                    >
+                        <ChatBubbleIcon
+                            :class="{
+                                iconactive: $page.url === '/chat',
+                                icon: true,
+                            }"
+                        />
+                        <p
+                            :class="{
+                                pactive: $page.url === '/chat',
+                                tabsp: true,
+                            }"
+                        >
+                            Chat
+                        </p>
+                    </div>
+                </Link>
             </div>
         </div>
         <div class="bottom">
             <div class="pages">
-                <div class="tabs">
-                    <GearIcon class="icon" />
-                    <p>Settings</p>
-                </div>
-                <div class="tabs">
-                    <QuestionMarkCircledIcon class="icon" />
-                    <p>Help</p>
-                </div>
+                <Link :href="route('settings')">
+                    <div
+                        :class="{
+                            tabsactive: $page.url === '/settings',
+                            tabs: true,
+                        }"
+                    >
+                        <GearIcon
+                            :class="{
+                                iconactive: $page.url === '/settings',
+                                icon: true,
+                            }"
+                        />
+                        <p
+                            :class="{
+                                pactive: $page.url === '/settings',
+                                tabsp: true,
+                            }"
+                        >
+                            Settings
+                        </p>
+                    </div>
+                </Link>
+                <Link :href="route('help')">
+                    <div
+                        :class="{
+                            tabsactive: $page.url === '/help',
+                            tabs: true,
+                        }"
+                    >
+                        <QuestionMarkCircledIcon
+                            :class="{
+                                iconactive: $page.url === '/help',
+                                icon: true,
+                            }"
+                        />
+                        <p
+                            :class="{
+                                pactive: $page.url === '/help',
+                                tabsp: true,
+                            }"
+                        >
+                            Help
+                        </p>
+                    </div>
+                </Link>
             </div>
         </div>
     </div>
@@ -83,6 +174,10 @@ import { Link } from "@inertiajs/vue3";
     justify-content: center;
     align-items: center;
 }
+.pages a {
+    display: inline-block;
+    width: 100%;
+}
 .tabs {
     padding: 8px;
     width: 100%;
@@ -97,7 +192,10 @@ import { Link } from "@inertiajs/vue3";
 .tabs:hover {
     background-color: #e4e4e7;
 }
-.tabs .icon {
+.tabsactive {
+    background-color: #e4e4e7;
+}
+.icon {
     color: #71717a;
     height: 20px;
     width: 20px;
@@ -105,12 +203,18 @@ import { Link } from "@inertiajs/vue3";
 .tabs:hover .icon {
     color: #27272a;
 }
-.tabs > p {
+.iconactive {
+    color: #27272a;
+}
+.tabsp {
+    color: #a1a1aa;
     font-size: 8px;
     font-weight: 500;
-    color: #a1a1aa;
 }
-.tabs:hover p {
+.tabs:hover .tabsp {
+    color: #71717a;
+}
+.pactive {
     color: #71717a;
 }
 </style>
