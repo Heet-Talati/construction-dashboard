@@ -1,12 +1,18 @@
 import "./bootstrap";
 import "../css/app.css";
+import "./styles.css";
 
 import { createApp, h, DefineComponent } from "vue";
 import { createInertiaApp } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy";
+import { registerLicense } from "@syncfusion/ej2-base";
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
+
+registerLicense(
+    "ORg4AjUWIQA/Gnt2UFhhQlJBfV5AQmBIYVp/TGpJfl96cVxMZVVBJAtUQF1hTX5QdENjX35dcH1TQGBe"
+);
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

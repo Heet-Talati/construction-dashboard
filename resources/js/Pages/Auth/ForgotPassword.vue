@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import ForgotPassword from "../../Components/Forms/ForgotPassword.vue";
+import ForgotPasswordForm from "@/Components/forms/ForgotPasswordForm.vue";
 import Label from "../../Components/ui/label/Label.vue";
 import { Link } from "@inertiajs/vue3";
 </script>
@@ -12,7 +12,7 @@ import { Link } from "@inertiajs/vue3";
                 <div class="logo">
                     <img src="../../../../public/assets/LogoD.png" alt="Logo" />
                 </div>
-                <ForgotPassword />
+                <ForgotPasswordForm />
                 <div class="links">
                     <p class="mini-text">
                         Don't have an account?
