@@ -10,7 +10,10 @@ import { registerLicense } from "@syncfusion/ej2-base";
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
-registerLicense(import.meta.env.SYNCFUSION_LICENSE);
+// registerLicense(import.meta.env.SYNCFUSION_LICENSE);
+registerLicense(
+    "ORg4AjUWIQA/Gnt2UFhhQlJBfV5AQmBIYVp/TGpJfl96cVxMZVVBJAtUQF1hTX5QdENjX35dcH1TQGBe"
+);
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

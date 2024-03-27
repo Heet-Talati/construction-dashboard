@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { PlusCircledIcon } from "@radix-icons/vue";
 import Button from "../../ui/button/Button.vue";
+import Input from "@/Components/ui/input/Input.vue";
+import Label from "@/Components/ui/label/Label.vue";
 import {
     Select,
     SelectContent,
@@ -10,6 +12,15 @@ import {
     SelectTrigger,
     SelectValue,
 } from "../../ui/select";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/Components/ui/dialog";
 </script>
 
 <template>
@@ -30,7 +41,53 @@ import {
                 </SelectGroup>
             </SelectContent>
         </Select>
-        <Button><PlusCircledIcon /> Add Project</Button>
+        <Dialog>
+            <DialogTrigger as-child>
+                <Button><PlusCircledIcon /> Add Project</Button>
+            </DialogTrigger>
+            <DialogContent class="sm:max-w-[300px]">
+                <DialogHeader>
+                    <DialogTitle class="dialog-title"
+                        >Create Project</DialogTitle
+                    >
+                    <DialogDescription class="dialog-desc">
+                        Deploy your new project in one click.
+                    </DialogDescription>
+                </DialogHeader>
+                <div class="grid gap-4 py-4">
+                    <div class="grid grid-cols-4 items-center gap-2">
+                        <Label for="name"> Name </Label>
+                        <Input
+                            id="name"
+                            placeholder="Name of your Project"
+                            class="col-span-4"
+                        />
+                    </div>
+                    <div class="grid grid-cols-4 items-center gap-2">
+                        <Label for="username"> Team </Label>
+                        <Select>
+                            <SelectTrigger class="col-span-4">
+                                <SelectValue placeholder="Select" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>Project Teams</SelectLabel>
+                                    <SelectItem value="Team-1">
+                                        Team A
+                                    </SelectItem>
+                                    <SelectItem value="Team-2">
+                                        Team B
+                                    </SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
+                <DialogFooter>
+                    <Button type="submit"> Save changes & Deploy </Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
     </div>
 </template>
 
@@ -48,5 +105,17 @@ import {
 Button {
     padding: 8px 12px;
     gap: 4px;
+}
+
+.dialog-title {
+    font-family: "Inter";
+    font-size: 24px;
+    font-weight: bold;
+}
+.dialog-desc {
+    font-family: "Inter";
+    font-size: 12px;
+    font-weight: 400;
+    color: #71717a;
 }
 </style>
