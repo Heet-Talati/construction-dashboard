@@ -2,18 +2,7 @@
 import Sidebar from "../../../resources/js/Components/Partials/Main/Sidebar.vue";
 import Header from "../../../resources/js/Components/Partials/Main/Header.vue";
 import Label from "../Components/ui/label/Label.vue";
-import { Head } from "@inertiajs/vue3";
-
-// Temp
-import AuthenticatedLayout from "../Layouts/AuthenticatedLayout.vue";
-import DeleteUserForm from "./Profile/Partials/DeleteUserForm.vue";
-import UpdatePasswordForm from "./Profile/Partials/UpdatePasswordForm.vue";
-import UpdateProfileInformationForm from "./Profile/Partials/UpdateProfileInformationForm.vue";
-
-defineProps<{
-    mustVerifyEmail?: boolean;
-    status?: string;
-}>();
+import { Link, Head } from "@inertiajs/vue3";
 </script>
 
 <template>
@@ -28,32 +17,32 @@ defineProps<{
             <div class="bottom">
                 <div class="settings-sidebar">
                     <Label>Settings</Label>
-                </div>
-                <div class="main">
-                    <h2
-                        class="font-bold sm:p-4 text-2xl text-black-900 leading-tight"
-                    >
-                        Profile
-                    </h2>
-
-                    <div>
-                        <div class="p-2 sm:p-4 bg-white shadow sm:rounded-lg">
-                            <UpdateProfileInformationForm
-                                :must-verify-email="mustVerifyEmail"
-                                :status="status"
-                                class="max-w-xl"
-                            />
-                        </div>
-
-                        <div class="p-2 sm:p-4 bg-white shadow sm:rounded-lg">
-                            <UpdatePasswordForm class="max-w-xl" />
-                        </div>
-
-                        <div class="p-2 sm:p-4 bg-white shadow sm:rounded-lg">
-                            <DeleteUserForm class="max-w-xl" />
-                        </div>
+                    <div class="settings-items">
+                        <button>
+                            <Link :href="route('profile.edit')">Profile</Link>
+                        </button>
+                        <button>
+                            <Link :href="route('profile.edit')">Roles</Link>
+                        </button>
+                        <button>
+                            <Link :href="route('profile.edit')">
+                                Permissions
+                            </Link>
+                        </button>
+                        <button>
+                            <Link :href="route('profile.edit')">Teams</Link>
+                        </button>
+                        <button>
+                            <Link
+                                :href="route('logout')"
+                                method="post"
+                                as="button"
+                                >Log Out</Link
+                            >
+                        </button>
                     </div>
                 </div>
+                <slot />
             </div>
         </div>
     </div>
@@ -108,5 +97,21 @@ Label {
 .main {
     display: flex;
     flex-direction: column;
+}
+.settings-items {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    font-family: Inter;
+    font-weight: 600;
+    gap: 12px;
+    padding: 24px 0;
+}
+.settings-items button {
+    cursor: pointer;
+    width: auto;
+    padding: 4px 8px;
+    background-color: #d4d4d8;
+    border-radius: 4px;
 }
 </style>
