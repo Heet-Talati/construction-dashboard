@@ -52,6 +52,7 @@ import { Head } from "@inertiajs/vue3";
     height: 100%;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 24px;
 }
 .right .bottom h1 {
