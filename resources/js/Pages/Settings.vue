@@ -32,14 +32,9 @@ import { Link, Head } from "@inertiajs/vue3";
                         <button>
                             <Link :href="route('profile.edit')">Teams</Link>
                         </button>
-                        <button>
-                            <Link
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                                >Log Out</Link
-                            >
-                        </button>
+                        <Link :href="route('logout')" method="post" as="button"
+                            >Log Out</Link
+                        >
                     </div>
                 </div>
                 <slot />
@@ -107,7 +102,8 @@ Label {
     gap: 12px;
     padding: 24px 0;
 }
-.settings-items button {
+.settings-items button,
+.settings-items Link {
     cursor: pointer;
     width: auto;
     padding: 4px 8px;

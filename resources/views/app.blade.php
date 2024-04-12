@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
@@ -33,9 +34,6 @@
 </body>
 
 <script>
-    // Where there is a will, there is a way.
-    // Stupid syncfusion error message terminator
-    // Reason: The syncfusion need the license key directly in the registerLicense method. To protect my key, I hid it in the .env file and the method is not recognizing it, and therefore giving an error message. This is the eradicator for the STUPID METHOD'S ERROR
     const page = window.document.location.pathname;
     window.setTimeout(() => {
         if (page != '/login' || page != '/register' || page != '/verify-email') {

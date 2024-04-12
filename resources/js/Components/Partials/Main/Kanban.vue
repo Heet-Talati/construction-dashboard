@@ -5,6 +5,8 @@
         keyField="Status"
         :cardSettings="cardSettings"
         ref="kanbanObj"
+        :actionComplete="onActionComplete"
+        :addCard="newCard"
     >
         <e-columns>
             <e-column headerText="📋 To Do" keyField="Open"></e-column>
@@ -19,17 +21,15 @@
 </template>
 
 <script>
-import { ref } from "vue";
 import {
     KanbanComponent,
     ColumnsDirective,
     ColumnDirective,
 } from "@syncfusion/ej2-vue-kanban";
-import { DataManager, ODataAdaptor } from "@syncfusion/ej2-data";
+import { DataManager, UrlAdaptor, ODataAdaptor } from "@syncfusion/ej2-data";
 import Button from "../../../Components/ui/button/Button.vue";
 
 export default {
-    // name: 'Kanban',
     components: {
         "ejs-kanban": KanbanComponent,
         "e-columns": ColumnsDirective,
@@ -37,29 +37,13 @@ export default {
         Button: Button,
     },
     setup() {
-        // const kanbanData = ref([
-        //     {
-        //         Id: 1,
-        //         Status: "Open",
-        //         Summary:
-        //             "Analyze the new requirements gathered from the customer.",
-        //     },
-        //     {
-        //         Id: 2,
-        //         Status: "InProgress",
-        //         Summary: "Improve application performance",
-        //     },
-        //     {
-        //         Id: 3,
-        //         Status: "Open",
-        //         Summary:
-        //             "Arrange a web meeting with the customer to get new requirements.",
-        //     },
-        // ]);
-
-        let SERVICE_URI = "http://127.0.0.1:8000/api/tasks";
+        const SERVICE_URI = "http://127.0.0.1:8000/api";
         const kanbanData = new DataManager({
-            url: SERVICE_URI,
+            url: `${SERVICE_URI}/tasks`,
+            // insertUrl: `${SERVICE_URI}/tasks`,
+            // updateUrl: `${SERVICE_URI}/tasks`,
+            // removeUrl: `${SERVICE_URI}/tasks`,
+            // adaptor: new UrlAdaptor(),
             adaptor: new ODataAdaptor(),
             crossDomain: true,
         });
@@ -69,17 +53,41 @@ export default {
         };
 
         const newCard = function () {
-            const cardIds = kanbanData.value.map((obj) => parseInt(obj.Id, 10));
-            const cardCount = Math.max(...cardIds) + 1;
             const cardDetails = {
-                Id: cardCount,
                 Status: "Open",
                 Summary: "This is a new card",
             };
-            const updatedData = [...kanbanData.value, cardDetails];
-            kanbanData.value = updatedData;
+            axios
+                .post(route("tasks.create"), cardDetails)
+                .then((res) => {
+                    location.reload();
+                    console.log(res);
+                })
+                .catch((error) => {
+                    console.error("Error creating new card:", error);
+                });
         };
-        return { kanbanData, cardSettings, newCard };
+
+        const onActionComplete = (args) => {
+            if (args.requestType === "cardChanged") {
+                const changedRecords = args.changedRecords;
+                if (changedRecords.length > 0) {
+                    const id = changedRecords[0].Id;
+                    const updatedStatus = changedRecords[0].Status;
+                    axios
+                        .put(`/api/tasks/${id}`, { Status: updatedStatus })
+                        .then((response) => {
+                            console.log(response);
+                            console.log("Task status updated successfully");
+                        })
+                        .catch((error) => {
+                            console.error("Error updating task status:", error);
+                        });
+                }
+            }
+        };
+
+        return { kanbanData, cardSettings, newCard, onActionComplete };
     },
 };
 </script>

@@ -8,37 +8,47 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
-    public function index()
+    public function dataSource()
     {
-        $user = Auth::user();
-
-        $tasks = Task::where('user_id', $user->id)->get(['Id', 'Status', 'Summary']);
-
-        return response()->json($tasks, 200);
+        $tasks = Task::all();
+        return response()->json($tasks);
     }
 
-    // public function store(Request $request)
-    // {
-    //     $task = new Task();
-    //     $task->user_id = auth()->id();
-    //     $task->project_id = $request->project_id;
-    //     $task->task_id = $request->task_id;
-    //     $task->Status = $request->Status;
-    //     $task->Summary = $request->Summary;
-    //     $task->save();
+    public function insert(Request $request)
+    {
+        $task = new Task();
+        $task->Status = $request->input('status');
+        $task->Summary = $request->input('summary');
+        $task->save();
 
-    //     return $task;
-    // }
+        return response()->json($task);
+    }
 
-    // public function update(Request $request, Task $task)
-    // {
-    //     $task->update($request->all());
-    //     return $task;
-    // }
+    public function update(Request $request, $id)
+    {
+        $task = Task::find($id);
 
-    // public function destroy(Task $task)
-    // {
-    //     $task->delete();
-    //     return response()->noContent();
-    // }
+        if (!$task) {
+            return response()->json(['error' => 'Task not found'], 404);
+        }
+
+        $task->Status = $request->input('status');
+        $task->Summary = $request->input('summary');
+        $task->save();
+
+        return response()->json($task);
+    }
+
+    public function delete($id)
+    {
+        $task = Task::find($id);
+
+        if (!$task) {
+            return response()->json(['error' => 'Task not found'], 404);
+        }
+
+        $task->delete();
+
+        return response()->json(['message' => 'Task deleted successfully']);
+    }
 }
