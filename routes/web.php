@@ -52,6 +52,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::prefix('project/{id}')->group(function () {
+    Route::get('dashboard', function ($id) {
+        // return Inertia::render('Dashboard');
+        return '<h1>Project ' . $id . ' works!!</h1>';
+    });
+});
+
 Route::fallback(function () {
     return Inertia::render('Errors/404');
 });

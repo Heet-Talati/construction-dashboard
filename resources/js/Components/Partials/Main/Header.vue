@@ -21,6 +21,33 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/Components/ui/dialog";
+import axios from "axios";
+import { ref } from "vue";
+import { onMounted } from "vue";
+
+interface Project {
+    id: string;
+    name: string;
+}
+
+const projects = ref<Project[]>([]);
+const fetchProjects = () => {
+    axios
+        .get(route("projects.get"))
+        .then((res) => {
+            projects.value = res.data;
+        })
+        .catch((error) => {
+            console.error("Error fetching projects:", error);
+        });
+};
+onMounted(fetchProjects);
+
+// const selectedItem = ref<string>("");
+// const handleSelectChange = (id: string) => {
+//     console.log(id);
+//     axios.get(route("chat"));
+// };
 </script>
 
 <template>
@@ -32,12 +59,14 @@ import {
             <SelectContent>
                 <SelectGroup>
                     <SelectLabel>Project</SelectLabel>
-                    <SelectItem value="shivalik-shilp">
-                        Shivalik Shilp
-                    </SelectItem>
-                    <SelectItem value="ratnakar">
-                        Ratnakar Nine Square</SelectItem
+                    <SelectItem
+                        v-for="project in projects"
+                        :value="project.name"
                     >
+                        <a :href="`/project/${project.id}/dashboard`">
+                            {{ project.name }}
+                        </a>
+                    </SelectItem>
                 </SelectGroup>
             </SelectContent>
         </Select>

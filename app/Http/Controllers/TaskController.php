@@ -17,8 +17,8 @@ class TaskController extends Controller
     public function insert(Request $request)
     {
         $task = new Task();
-        $task->Status = $request->input('status');
-        $task->Summary = $request->input('summary');
+        $task->Status = $request->input('Status');
+        $task->Summary = $request->input('Summary');
         $task->save();
 
         return response()->json($task);
@@ -32,8 +32,8 @@ class TaskController extends Controller
             return response()->json(['error' => 'Task not found'], 404);
         }
 
-        $task->Status = $request->input('status');
-        $task->Summary = $request->input('summary');
+        $task->Status = $request->input('Status');
+        $task->Summary = $request->input('Summary');
         $task->save();
 
         return response()->json($task);
