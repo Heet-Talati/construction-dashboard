@@ -53,10 +53,31 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::prefix('project/{id}')->group(function () {
+
     Route::get('dashboard', function ($id) {
-        // return Inertia::render('Dashboard');
-        return '<h1>Project ' . $id . ' works!!</h1>';
-    });
+        return Inertia::render('Project/Dashboard');
+        // return '<h1>Project ' . $id . ' works!!</h1>';
+    })->name('project.dashboard');
+
+    Route::get('tasks', function ($id) {
+        return Inertia::render('Project/Dashboard');
+        // return '<h1>Project ' . $id . ' works!!</h1>';
+    })->name('project.tasks');
+
+    Route::get('chat', function ($id) {
+        return Inertia::render('Project/Dashboard');
+        // return '<h1>Project ' . $id . ' works!!</h1>';
+    })->name('project.chat');
+
+    Route::get('timeline', function ($id) {
+        return Inertia::render('Project/Dashboard');
+        // return '<h1>Project ' . $id . ' works!!</h1>';
+    })->name('project.timeline');
+
+    Route::get('documents', function ($id) {
+        return Inertia::render('Project/Dashboard');
+        // return '<h1>Project ' . $id . ' works!!</h1>';
+    })->name('project.documents');
 });
 
 Route::fallback(function () {
