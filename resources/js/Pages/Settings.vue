@@ -19,9 +19,10 @@ import { Link, Head } from "@inertiajs/vue3";
                     <Label>Settings</Label>
                     <div class="settings-items">
                         <button>
-                            <Link :href="route('profile.edit')">Profile</Link>
+                            <Link href="/settings/profile">Profile</Link>
+                            <!-- <Link :href="route('profile.edit')">Profile</Link> -->
                         </button>
-                        <button>
+                        <!-- <button>
                             <Link :href="route('profile.edit')">Roles</Link>
                         </button>
                         <button>
@@ -31,7 +32,7 @@ import { Link, Head } from "@inertiajs/vue3";
                         </button>
                         <button>
                             <Link :href="route('profile.edit')">Teams</Link>
-                        </button>
+                        </button> -->
                         <Link :href="route('logout')" method="post" as="button"
                             >Log Out</Link
                         >

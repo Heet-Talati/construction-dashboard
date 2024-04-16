@@ -63,7 +63,7 @@ Route::prefix('project/{id}')->group(function () {
 
     Route::get('tasks', function ($id) {
         if (Project::findOrFail($id)) {
-            return Inertia::render('Project/Dashboard');
+            return Inertia::render('Project/Tasks');
         }
     })->name('project.tasks');
 
