@@ -2,7 +2,7 @@
 // import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import Sidebar from "../../../../resources/js/Components/Partials/Project/Sidebar.vue";
 import Header from "../../../../resources/js/Components/Partials/Project/Header.vue";
-import Kanban from "../../../../resources/js/Components/Partials/Main/Kanban.vue";
+import Kanban from "../../../../resources/js/Components/Partials/Project/Kanban.vue";
 import { Head } from "@inertiajs/vue3";
 </script>
 

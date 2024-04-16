@@ -14,6 +14,12 @@ class TaskController extends Controller
         return response()->json($tasks);
     }
 
+    public function projectTasks($id)
+    {
+        $tasks = Task::where('project_id', $id)->get();
+        return response()->json($tasks);
+    }
+
     public function insert(Request $request)
     {
         $task = new Task();

@@ -20,7 +20,6 @@ if (url) {
         .filter((char) => "0" <= char && char <= "9")
         .join("");
     id = parseInt(digits, 10);
-    console.log(id);
 }
 </script>
 
