@@ -23,4 +23,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/tasks/{id}', [TaskController::class, 'delete']);
 });
 
-Route::get('/projects', [ProjectController::class, 'all'])->name('projects.get');
+Route::get('/projects', [ProjectController::class, 'all'])->middleware('auth:sanctum')->name('projects.get');

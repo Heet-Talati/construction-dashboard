@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestController;
+use App\Models\Project;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
@@ -55,34 +56,39 @@ Route::middleware('auth')->group(function () {
 Route::prefix('project/{id}')->group(function () {
 
     Route::get('dashboard', function ($id) {
-        return Inertia::render('Project/Dashboard');
-        // return '<h1>Project ' . $id . ' works!!</h1>';
+        if (Project::findOrFail($id)) {
+            return Inertia::render('Project/Dashboard');
+        }
     })->name('project.dashboard');
 
     Route::get('tasks', function ($id) {
-        return Inertia::render('Project/Dashboard');
-        // return '<h1>Project ' . $id . ' works!!</h1>';
+        if (Project::findOrFail($id)) {
+            return Inertia::render('Project/Dashboard');
+        }
     })->name('project.tasks');
 
     Route::get('chat', function ($id) {
-        return Inertia::render('Project/Dashboard');
-        // return '<h1>Project ' . $id . ' works!!</h1>';
+        if (Project::findOrFail($id)) {
+            return Inertia::render('Project/Dashboard');
+        }
     })->name('project.chat');
 
     Route::get('timeline', function ($id) {
-        return Inertia::render('Project/Dashboard');
-        // return '<h1>Project ' . $id . ' works!!</h1>';
+        if (Project::findOrFail($id)) {
+            return Inertia::render('Project/Dashboard');
+        }
     })->name('project.timeline');
 
     Route::get('documents', function ($id) {
-        return Inertia::render('Project/Dashboard');
-        // return '<h1>Project ' . $id . ' works!!</h1>';
+        if (Project::findOrFail($id)) {
+            return Inertia::render('Project/Dashboard');
+        }
     })->name('project.documents');
 });
 
 Route::fallback(function () {
     return Inertia::render('Errors/404');
-});
+})->name('fallback.route');
 
 
 require __DIR__ . '/auth.php';
