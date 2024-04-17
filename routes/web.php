@@ -54,33 +54,38 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::prefix('project/{id}')->group(function ($id) {
+Route::prefix('project/{id}')->group(function () {
 
     Route::get('dashboard', function ($id) {
+        if (!canSeeProject($id)) abort(404);
         if (Project::findOrFail($id) && Project::find($id)->team_id == Auth::user()->id) {
             return Inertia::render('Project/Dashboard');
         }
     })->name('project.dashboard');
 
     Route::get('tasks', function ($id) {
+        if (!canSeeProject($id)) abort(404);
         if (Project::findOrFail($id) && Project::find($id)->team_id == Auth::user()->id) {
             return Inertia::render('Project/Tasks');
         }
     })->name('project.tasks');
 
     Route::get('chat', function ($id) {
+        if (!canSeeProject($id)) abort(404);
         if (Project::findOrFail($id) && Project::find($id)->team_id == Auth::user()->id) {
             return Inertia::render('Project/Dashboard');
         }
     })->name('project.chat');
 
     Route::get('timeline', function ($id) {
+        if (!canSeeProject($id)) abort(404);
         if (Project::findOrFail($id) && Project::find($id)->team_id == Auth::user()->id) {
             return Inertia::render('Project/Dashboard');
         }
     })->name('project.timeline');
 
     Route::get('documents', function ($id) {
+        if (!canSeeProject($id)) abort(404);
         if (Project::findOrFail($id) && Project::find($id)->team_id == Auth::user()->id) {
             return Inertia::render('Project/Dashboard');
         }
@@ -91,5 +96,20 @@ Route::fallback(function () {
     return Inertia::render('Errors/404');
 })->name('fallback.route');
 
+
+// functions
+function canSeeProject($id)
+{
+    $user = Auth::user()->id;
+    $projects =  Project::where('team_id', $user)->get(['id'])->toJson();
+    $projects = json_decode($projects);
+    $list = array();
+
+    foreach ($projects as $key => $value) {
+        array_push($list, $value->id);
+    }
+
+    return in_array($id, $list);
+}
 
 require __DIR__ . '/auth.php';
