@@ -1,11 +1,11 @@
 <template>
     <Button variant="secondary" @click.native="newCard"> Add New Card</Button>
     <ejs-kanban
+        :key="componentKey"
         :dataSource="kanbanData"
         keyField="Status"
         :cardSettings="cardSettings"
         ref="kanbanObj"
-        :actionComplete="onActionComplete"
         :addCard="newCard"
     >
         <e-columns>
@@ -28,6 +28,7 @@ import {
 } from "@syncfusion/ej2-vue-kanban";
 import { DataManager, WebApiAdaptor } from "@syncfusion/ej2-data";
 import Button from "../../../Components/ui/button/Button.vue";
+import { ref } from "vue";
 
 export default {
     components: {
@@ -47,6 +48,7 @@ export default {
             contentField: "Summary",
             headerField: "id",
         };
+        const componentKey = ref(0);
 
         const newCard = function () {
             const cardDetails = {
@@ -57,34 +59,14 @@ export default {
             axios
                 .post(route("tasks.create"), cardDetails)
                 .then((res) => {
-                    location.reload();
-                    console.log(res);
+                    componentKey.value += 1;
                 })
                 .catch((error) => {
                     console.error("Error creating new card:", error);
                 });
         };
 
-        const onActionComplete = (args) => {
-            if (args.requestType === "cardChanged") {
-                const changedRecords = args.changedRecords;
-                if (changedRecords.length > 0) {
-                    const id = changedRecords[0].Id;
-                    const updatedStatus = changedRecords[0].Status;
-                    axios
-                        .put(`/api/tasks/${id}`, { Status: updatedStatus })
-                        .then((response) => {
-                            console.log(response);
-                            console.log("Task status updated successfully");
-                        })
-                        .catch((error) => {
-                            console.error("Error updating task status:", error);
-                        });
-                }
-            }
-        };
-
-        return { kanbanData, cardSettings, newCard, onActionComplete };
+        return { kanbanData, cardSettings, newCard, componentKey };
     },
 };
 </script>

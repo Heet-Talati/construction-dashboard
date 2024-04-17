@@ -1,12 +1,13 @@
 <template>
-    <Button variant="secondary" @click.native="newCard"> Add New Card</Button>
+    <Button variant="secondary" @click.native="newCard">Add New Card</Button>
     <ejs-kanban
+        :key="componentKey"
         :dataSource="kanbanData"
         keyField="Status"
         :cardSettings="cardSettings"
         ref="kanbanObj"
-        :actionComplete="onActionComplete"
         :addCard="newCard"
+        enable-persistence="true"
     >
         <e-columns>
             <e-column headerText="📋 To Do" keyField="Open"></e-column>
@@ -28,7 +29,7 @@ import {
 } from "@syncfusion/ej2-vue-kanban";
 import { DataManager, WebApiAdaptor } from "@syncfusion/ej2-data";
 import Button from "../../../Components/ui/button/Button.vue";
-// import Cookies from "js-cookie";
+import { ref } from "vue";
 
 export default {
     components: {
@@ -47,6 +48,7 @@ export default {
             return parseInt(digits, 10);
         };
         const id = getUrl();
+        const componentKey = ref(0);
 
         const SERVICE_URI = "http://127.0.0.1:8000/api";
         const kanbanData = new DataManager({
@@ -54,7 +56,7 @@ export default {
             adaptor: new WebApiAdaptor(),
             // adaptor: new UrlAdaptor(),
             // adaptor: new ODataAdaptor(),
-            crossDomain: true,
+            crossDomain: false,
         });
         console.log(getUrl());
         const cardSettings = {
@@ -72,8 +74,7 @@ export default {
             axios
                 .post(route("project.task.create"), cardDetails)
                 .then((res) => {
-                    // location.reload();
-                    console.log(res);
+                    componentKey.value += 1;
                 })
                 .catch((error) => {
                     console.error("Error creating new card:", error);
@@ -95,30 +96,11 @@ export default {
         //     return request;
         // });
 
-        const onActionComplete = (args) => {
-            if (args.requestType === "cardChanged") {
-                const changedRecords = args.changedRecords;
-                if (changedRecords.length > 0) {
-                    const id = changedRecords[0].Id;
-                    const updatedStatus = changedRecords[0].Status;
-                    axios
-                        .put(`/api/tasks/${id}`, { Status: updatedStatus })
-                        .then((response) => {
-                            console.log(response);
-                            console.log("Task status updated successfully");
-                        })
-                        .catch((error) => {
-                            console.error("Error updating task status:", error);
-                        });
-                }
-            }
-        };
-
         return {
             kanbanData,
             cardSettings,
             newCard,
-            onActionComplete,
+            componentKey,
             id,
         };
     },
