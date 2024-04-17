@@ -22,6 +22,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/tasks/{id}', [TaskController::class, 'update']);
     Route::delete('/tasks/{id}', [TaskController::class, 'delete']);
 });
-Route::get('/project/tasks/{id}', [TaskController::class, 'projectTasks']);
+Route::get('/project/tasks/{id}', [TaskController::class, 'projectTasks'])->middleware('auth:sanctum');
+
+Route::post('/project/tasks/insert', [TaskController::class, 'projectTasksInsert'])->middleware('auth:sanctum')->name('project.task.create');
+
+// Route::put('/project/tasks/{id}/update', [TaskController::class, 'projectTasks'])->middleware('auth:sanctum');
+
+Route::delete('/project/tasks/{id}/{task_id}', [TaskController::class, 'projectTasksDelete'])->middleware('auth:sanctum');
 
 Route::get('/projects', [ProjectController::class, 'all'])->middleware('auth:sanctum')->name('projects.get');

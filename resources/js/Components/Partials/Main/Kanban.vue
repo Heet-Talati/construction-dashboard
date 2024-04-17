@@ -15,7 +15,7 @@
                 keyField="InProgress"
             ></e-column>
             <e-column headerText="📖 In Review" keyField="Review"></e-column>
-            <e-column headerText="✅ Done" keyField="Close"></e-column>
+            <e-column headerText="✅ Done" keyField="Done"></e-column>
         </e-columns>
     </ejs-kanban>
 </template>
@@ -26,7 +26,7 @@ import {
     ColumnsDirective,
     ColumnDirective,
 } from "@syncfusion/ej2-vue-kanban";
-import { DataManager, UrlAdaptor, ODataAdaptor } from "@syncfusion/ej2-data";
+import { DataManager, WebApiAdaptor } from "@syncfusion/ej2-data";
 import Button from "../../../Components/ui/button/Button.vue";
 
 export default {
@@ -40,22 +40,19 @@ export default {
         const SERVICE_URI = "http://127.0.0.1:8000/api";
         const kanbanData = new DataManager({
             url: `${SERVICE_URI}/tasks`,
-            // insertUrl: `${SERVICE_URI}/tasks`,
-            // updateUrl: `${SERVICE_URI}/tasks`,
-            // removeUrl: `${SERVICE_URI}/tasks`,
-            // adaptor: new UrlAdaptor(),
-            adaptor: new ODataAdaptor(),
+            adaptor: new WebApiAdaptor(),
             crossDomain: true,
         });
         const cardSettings = {
             contentField: "Summary",
-            headerField: "Id",
+            headerField: "id",
         };
 
         const newCard = function () {
             const cardDetails = {
                 Status: "Open",
                 Summary: "This is a new card",
+                task_id: 10000 * Math.random(),
             };
             axios
                 .post(route("tasks.create"), cardDetails)

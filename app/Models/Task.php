@@ -12,5 +12,9 @@ class Task extends Model
 
     protected $fillable = [
         'Status',
+        'Summary',
+        'project_id',
+        'user_id',
+        'task_id'
     ];
 }

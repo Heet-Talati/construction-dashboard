@@ -8,23 +8,65 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
+
     public function dataSource()
     {
-        $tasks = Task::all();
+        $current_user = Auth::user()->id;
+        $tasks = Task::where('user_id', $current_user)->get();
         return response()->json($tasks);
     }
 
     public function projectTasks($id)
     {
-        $tasks = Task::where('project_id', $id)->get();
+        $current_user = Auth::user()->id;
+        $tasks = Task::where('project_id', $id)->where('user_id', $current_user)->get();
         return response()->json($tasks);
+    }
+
+    public function projectTasksInsert(Request $request)
+    {
+        try {
+            $validatedData = $request->validate([
+                'Status' => 'required',
+                'Summary' => 'required',
+                'project_id' => 'required',
+                'task_id' => 'required',
+            ]);
+
+            $task = new Task();
+            $task->Status = $validatedData['Status'];
+            $task->Summary = $validatedData['Summary'];
+            $task->project_id = $validatedData['project_id'];
+            $task->task_id = $validatedData['task_id'];
+            $task->user_id = Auth::user()->id;
+            $task->save();
+
+            return response()->json($task);
+        } catch (\Exception $e) {
+            // return response()->json(['error' => 'Internal Server Error'], 500);
+            // return response()->json();
+        }
+    }
+
+    public function projectTasksDelete($task_id)
+    {
+        $task = Task::find($task_id);
+        $task->forceDelete();
     }
 
     public function insert(Request $request)
     {
+        $validatedData = $request->validate([
+            'Status' => 'required',
+            'Summary' => 'required',
+            'task_id' => 'required',
+        ]);
+
         $task = new Task();
-        $task->Status = $request->input('Status');
-        $task->Summary = $request->input('Summary');
+        $task->Status = $validatedData['Status'];
+        $task->Summary = $validatedData['Summary'];
+        $task->task_id = $validatedData['task_id'];
+        $task->user_id = Auth::user()->id;
         $task->save();
 
         return response()->json($task);

@@ -26,13 +26,9 @@ import {
     ColumnsDirective,
     ColumnDirective,
 } from "@syncfusion/ej2-vue-kanban";
-import {
-    DataManager,
-    UrlAdaptor,
-    ODataAdaptor,
-    ODataV4Adaptor,
-} from "@syncfusion/ej2-data";
+import { DataManager, WebApiAdaptor } from "@syncfusion/ej2-data";
 import Button from "../../../Components/ui/button/Button.vue";
+// import Cookies from "js-cookie";
 
 export default {
     components: {
@@ -55,34 +51,49 @@ export default {
         const SERVICE_URI = "http://127.0.0.1:8000/api";
         const kanbanData = new DataManager({
             url: `${SERVICE_URI}/project/tasks/${id}`,
-            // insertUrl: `${SERVICE_URI}/tasks`,
-            // updateUrl: `${SERVICE_URI}/tasks`,
-            // removeUrl: `${SERVICE_URI}/tasks`,
+            adaptor: new WebApiAdaptor(),
             // adaptor: new UrlAdaptor(),
-            adaptor: new ODataAdaptor(),
+            // adaptor: new ODataAdaptor(),
             crossDomain: true,
         });
         console.log(getUrl());
         const cardSettings = {
             contentField: "Summary",
-            headerField: "Id",
+            headerField: "id",
         };
 
         const newCard = function () {
             const cardDetails = {
                 Status: "Open",
                 Summary: "This is a new card",
+                task_id: 10000 * Math.random(),
+                project_id: id,
             };
             axios
-                .post(route("tasks.create"), cardDetails)
+                .post(route("project.task.create"), cardDetails)
                 .then((res) => {
-                    location.reload();
+                    // location.reload();
                     console.log(res);
                 })
                 .catch((error) => {
                     console.error("Error creating new card:", error);
                 });
         };
+
+        // axiosInstance.interceptors.request.use(async (request) => {
+        //     request.headers["X-XSRF-TOKEN"] = Cookies.get("XSRF-TOKEN");
+        //     if (
+        //         (request.method == "post" ||
+        //             request.method == "put" ||
+        //             request.method == "delete") &&
+        //         !Cookies.get("XSRF-TOKEN")
+        //     ) {
+        //         await axiosInstance.get("/sanctum/csrf-cookie").then(() => {
+        //             request.headers["X-XSRF-TOKEN"] = Cookies.get("XSRF-TOKEN");
+        //         });
+        //     }
+        //     return request;
+        // });
 
         const onActionComplete = (args) => {
             if (args.requestType === "cardChanged") {
@@ -103,7 +114,13 @@ export default {
             }
         };
 
-        return { kanbanData, cardSettings, newCard, onActionComplete, id };
+        return {
+            kanbanData,
+            cardSettings,
+            newCard,
+            onActionComplete,
+            id,
+        };
     },
 };
 </script>
