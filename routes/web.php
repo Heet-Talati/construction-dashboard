@@ -80,14 +80,14 @@ Route::prefix('project/{id}')->group(function () {
     Route::get('timeline', function ($id) {
         if (!canSeeProject($id)) abort(404);
         if (Project::findOrFail($id) && Project::find($id)->team_id == Auth::user()->id) {
-            return Inertia::render('Project/Dashboard');
+            return Inertia::render('Project/Timeline');
         }
     })->name('project.timeline');
 
     Route::get('documents', function ($id) {
         if (!canSeeProject($id)) abort(404);
         if (Project::findOrFail($id) && Project::find($id)->team_id == Auth::user()->id) {
-            return Inertia::render('Project/Dashboard');
+            return Inertia::render('Project/Documents');
         }
     })->name('project.documents');
 });
