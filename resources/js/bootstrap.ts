@@ -7,3 +7,5 @@ window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 // window.axios.defaults.headers.common["X-CSRF-TOKEN"] = $(
 //     'meta[name="csrf-token"]'
 // ).attr("content");
+axios.defaults.withCredentials = true;
+axios.defaults.withXSRFToken = true;

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TeamController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -26,8 +27,11 @@ Route::get('/project/tasks/{id}', [TaskController::class, 'projectTasks'])->midd
 
 Route::post('/project/tasks/insert', [TaskController::class, 'projectTasksInsert'])->middleware('auth:sanctum')->name('project.task.create');
 
-// Route::put('/project/tasks/{id}/update', [TaskController::class, 'projectTasks'])->middleware('auth:sanctum');
+Route::put('/project/tasks/{id}', [TaskController::class, 'projectTasksUpdate'])->middleware('auth:sanctum');
+// Route::put('/project/tasks/{id}/{task_id}', [TaskController::class, 'projectTasks'])->middleware('auth:sanctum');
 
 Route::delete('/project/tasks/{id}/{task_id}', [TaskController::class, 'projectTasksDelete'])->middleware('auth:sanctum');
 
 Route::get('/projects', [ProjectController::class, 'all'])->middleware('auth:sanctum')->name('projects.get');
+Route::post('/projects', [ProjectController::class, 'insert'])->middleware('auth:sanctum')->name('projects.make');
+Route::get('/teams', [TeamController::class, 'all'])->middleware('auth:sanctum')->name('teams.get');

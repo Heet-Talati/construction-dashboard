@@ -19,7 +19,10 @@ import { Head } from "@inertiajs/vue3";
             <Sidebar />
         </div>
         <div class="right">
-            <Header />
+            <div class="top">
+                <Header />
+            </div>
+            <div class="bottom"></div>
         </div>
     </div>
 </template>
@@ -45,6 +48,7 @@ import { Head } from "@inertiajs/vue3";
     background-color: #ffffff;
 
     display: flex;
+    flex-direction: column;
     justify-content: right;
 }
 </style>

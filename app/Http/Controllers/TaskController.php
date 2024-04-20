@@ -48,6 +48,21 @@ class TaskController extends Controller
         }
     }
 
+    public function projectTasksUpdate($task_id, Request $request)
+    {
+        $task = Task::find($request->id);
+
+        if (!$task) {
+            return response()->json(['error' => 'Task not found'], 404);
+        }
+
+        $task->Status = $request->input('Status');
+        $task->Summary = $request->input('Summary');
+        $task->save();
+
+        return response()->json($task);
+    }
+
     public function projectTasksDelete($task_id)
     {
         $task = Task::find($task_id);

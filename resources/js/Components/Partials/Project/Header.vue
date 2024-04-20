@@ -42,11 +42,22 @@ const fetchProjects = () => {
         });
 };
 onMounted(fetchProjects);
+
+const currentProject = function () {
+    const projectId = window.location.pathname.replace(/\D/g, "");
+
+    return projectId.toString();
+};
+
+const currentPage = function () {
+    const pathName = window.location.pathname.split("/");
+    return pathName[pathName.length - 1];
+};
 </script>
 
 <template>
     <div class="header">
-        <Select>
+        <Select :default-value="currentProject()">
             <SelectTrigger class="w-[220px]">
                 <SelectValue placeholder="Select a project" />
             </SelectTrigger>
@@ -55,9 +66,9 @@ onMounted(fetchProjects);
                     <SelectLabel>Project</SelectLabel>
                     <SelectItem
                         v-for="project in projects"
-                        :value="project.name"
+                        :value="project.id.toString()"
                     >
-                        <a :href="`/project/${project.id}/dashboard`">
+                        <a :href="`/project/${project.id}/${currentPage()}`">
                             {{ project.name }}
                         </a>
                     </SelectItem>

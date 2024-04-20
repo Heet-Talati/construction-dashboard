@@ -43,6 +43,35 @@ const fetchProjects = () => {
 };
 onMounted(fetchProjects);
 
+interface Team {
+    id: string;
+    name: string;
+}
+
+const teams = ref<Team[]>([]);
+axios.get(route("teams.get")).then((res) => {
+    teams.value = res.data;
+});
+
+const selectedProjectId = ref<string>("");
+const projectName = ref<string>("");
+const handleSaveChanges = () => {
+    const data = {
+        name: projectName.value,
+        project_id: selectedProjectId.value,
+    };
+    axios
+        .post(route("projects.make"), data)
+        .then((response) => {
+            console.log(response.data);
+            const redirectUrl = `${window.location.origin}/project/${response.data.id}/dashboard`;
+            window.location.href = redirectUrl;
+        })
+        .catch((error) => {
+            console.error("Error saving changes:", error);
+        });
+};
+
 // const selectedItem = ref<string>("");
 // const handleSelectChange = (id: string) => {
 //     console.log(id);
@@ -87,6 +116,7 @@ onMounted(fetchProjects);
                     <div class="grid grid-cols-4 items-center gap-2">
                         <Label for="name"> Name </Label>
                         <Input
+                            v-model="projectName"
                             id="name"
                             placeholder="Name of your Project"
                             class="col-span-4"
@@ -101,11 +131,12 @@ onMounted(fetchProjects);
                             <SelectContent>
                                 <SelectGroup>
                                     <SelectLabel>Project Teams</SelectLabel>
-                                    <SelectItem value="Team-1">
-                                        Team A
-                                    </SelectItem>
-                                    <SelectItem value="Team-2">
-                                        Team B
+                                    <SelectItem
+                                        v-for="team in teams"
+                                        :value="team.id"
+                                        @click="selectedProjectId = team.id"
+                                    >
+                                        {{ team.name }}
                                     </SelectItem>
                                 </SelectGroup>
                             </SelectContent>
@@ -113,7 +144,9 @@ onMounted(fetchProjects);
                     </div>
                 </div>
                 <DialogFooter>
-                    <Button type="submit"> Save changes & Deploy </Button>
+                    <Button @click="handleSaveChanges">
+                        Save changes & Deploy
+                    </Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

@@ -27,7 +27,12 @@ import {
     ColumnsDirective,
     ColumnDirective,
 } from "@syncfusion/ej2-vue-kanban";
-import { DataManager, WebApiAdaptor } from "@syncfusion/ej2-data";
+import {
+    DataManager,
+    WebApiAdaptor,
+    UrlAdaptor,
+    ODataAdaptor,
+} from "@syncfusion/ej2-data";
 import Button from "../../../Components/ui/button/Button.vue";
 import { ref } from "vue";
 
@@ -53,6 +58,8 @@ export default {
         const SERVICE_URI = "http://127.0.0.1:8000/api";
         const kanbanData = new DataManager({
             url: `${SERVICE_URI}/project/tasks/${id}`,
+            headers: "*",
+            // insertUrl: "/project/tasks/insert",
             adaptor: new WebApiAdaptor(),
             // adaptor: new UrlAdaptor(),
             // adaptor: new ODataAdaptor(),
