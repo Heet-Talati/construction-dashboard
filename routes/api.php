@@ -34,5 +34,8 @@ Route::delete('/project/tasks/{id}/{task_id}', [TaskController::class, 'projectT
 
 Route::get('/projects', [ProjectController::class, 'all'])->middleware('auth:sanctum')->name('projects.get');
 Route::post('/projects', [ProjectController::class, 'insert'])->middleware('auth:sanctum')->name('projects.make');
+Route::post('/teams/new', [TeamController::class, 'newTeam'])->name('teams.new');
+// Route::post('/teams/new', [TeamController::class, 'newTeam'])->middleware('auth:sanctum')->name('teams.new');
 Route::post('/teams/add', [TeamController::class, 'addMember'])->middleware('auth:sanctum')->name('member.add');
+Route::post('/teams/remove', [TeamController::class, 'removeMember'])->middleware('auth:sanctum')->name('member.remove');
 Route::get('/teams', [TeamController::class, 'all'])->middleware('auth:sanctum')->name('teams.get');

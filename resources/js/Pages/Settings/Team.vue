@@ -11,8 +11,20 @@ import {
     SelectTrigger,
     SelectValue,
 } from "../../Components/ui/select";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "../../Components/ui/alert-dialog";
+import { TrashIcon } from "@radix-icons/vue";
 import Settings from "../Settings.vue";
-import { ref } from "vue";
+import { getCurrentInstance, ref } from "vue";
 import axios from "axios";
 
 defineProps<{
@@ -21,7 +33,7 @@ defineProps<{
 }>();
 
 interface Team {
-    id: string;
+    id: number;
     name: string;
 }
 
@@ -30,7 +42,7 @@ axios.get(route("teams.get")).then((res) => {
     teams.value = res.data;
 });
 
-const selectedTeamId = ref<string>("");
+const selectedTeamId = ref<number>();
 const memberEmail = ref<string>("");
 const handleSaveChanges = () => {
     const data = {
@@ -49,10 +61,34 @@ const handleSaveChanges = () => {
         });
 };
 
-const myTeams = ref<Team[]>([]);
-axios.get(route("teams.get")).then((res) => {
-    myTeams.value = res.data;
-});
+const team_name = ref<string>("");
+const newTeam = () => {
+    axios
+        .post(route("teams.new"), { name: team_name.value })
+        .then((response) => {
+            console.log(response.data);
+            axios.get(route("teams.get")).then((res) => {
+                teams.value = res.data;
+            });
+        })
+        .catch((error) => {
+            console.error("Error saving changes:", error);
+        });
+};
+
+const removeTeam = (team_id: number) => {
+    axios
+        .post(route("member.remove"), { id: team_id })
+        .then((response) => {
+            console.log(response.data);
+            axios.get(route("teams.get")).then((res) => {
+                teams.value = res.data;
+            });
+        })
+        .catch((error) => {
+            console.error("Error saving changes:", error);
+        });
+};
 </script>
 
 <template>
@@ -62,13 +98,24 @@ axios.get(route("teams.get")).then((res) => {
                 Teams
             </h2>
             <div class="bottom">
+                <Label class="Label">Make a new Team:</Label>
+                <div class="new_team">
+                    <Input
+                        v-model="team_name"
+                        type="email"
+                        placeholder="Enter Your Team Name"
+                        class="col-span-4"
+                    />
+                    <Button @click="newTeam"> Go </Button>
+                </div>
+                <br />
                 <Label class="Label">Invite a member:</Label>
                 <div class="invite">
                     <Input
                         v-model="memberEmail"
                         id="email"
                         type="email"
-                        placeholder="Email of your Member"
+                        placeholder="Email Of Your Member"
                         class="col-span-4"
                     />
                     <Select>
@@ -93,9 +140,46 @@ axios.get(route("teams.get")).then((res) => {
                 <div class="my-teams my-5">
                     <Label class="Label">My current teams:</Label>
                     <br /><br />
-                    <h1 v-for="team in myTeams">
-                        {{ team.name }}
-                    </h1>
+                    <div
+                        v-for="team in teams"
+                        class="flex items-center justify-between bg-gray-200 rounded-md p-3 w-1/2 mb-3"
+                    >
+                        <h1 class="flex-grow font-semibold text-xl">
+                            {{ team.name }}
+                        </h1>
+                        <AlertDialog>
+                            <AlertDialogTrigger as-child>
+                                <Button variant="destructive" size="icon"
+                                    ><TrashIcon class="h-6 w-6"></TrashIcon
+                                ></Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                    <AlertDialogTitle
+                                        class="text-center text-2xl mb-2"
+                                    >
+                                        Are you absolutely sure?
+                                    </AlertDialogTitle>
+                                    <AlertDialogDescription class="text-center">
+                                        This action cannot be undone. This will
+                                        remove you from the team. You will no
+                                        longer be communicate with the team
+                                        group.
+                                    </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                    <AlertDialogCancel>
+                                        Cancel
+                                    </AlertDialogCancel>
+                                    <AlertDialogAction
+                                        @click="removeTeam(team.id)"
+                                    >
+                                        Leave {{ team.name }}
+                                    </AlertDialogAction>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                        </AlertDialog>
+                    </div>
                 </div>
             </div>
         </div>
@@ -119,6 +203,12 @@ axios.get(route("teams.get")).then((res) => {
     margin-top: 12px;
     display: flex;
     max-width: 700px;
+    gap: 24px;
+}
+.new_team {
+    margin-top: 12px;
+    display: flex;
+    max-width: 400px;
     gap: 24px;
 }
 </style>
