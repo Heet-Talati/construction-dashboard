@@ -42,6 +42,9 @@ Route::prefix('/settings')->middleware(['auth', 'verified'])->group(function () 
     Route::get('/profile', function () {
         return Inertia::render('Settings/Profile');
     })->name('settings');
+    Route::get('/teams', function () {
+        return Inertia::render('Settings/Team');
+    })->name('settings.team');
 });
 
 Route::get('/help', function () {
@@ -54,7 +57,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::prefix('project/{id}')->group(function () {
+Route::middleware('auth')->prefix('project/{id}')->group(function () {
 
     Route::get('dashboard', function ($id) {
         if (!canSeeProject($id)) abort(404);

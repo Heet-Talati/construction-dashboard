@@ -20,6 +20,16 @@
             line-height: 1.5;
             font-weight: 400;
         }
+
+        .left {
+            position: fixed;
+        }
+
+        .right {
+            overflow-y: auto;
+            overflow-x: hidden;
+            margin-left: 72px;
+        }
     </style>
 
     <!-- Scripts -->

@@ -20,7 +20,6 @@ import { Link, Head } from "@inertiajs/vue3";
                     <div class="settings-items">
                         <button>
                             <Link href="/settings/profile">Profile</Link>
-                            <!-- <Link :href="route('profile.edit')">Profile</Link> -->
                         </button>
                         <!-- <button>
                             <Link :href="route('profile.edit')">Roles</Link>
@@ -29,10 +28,10 @@ import { Link, Head } from "@inertiajs/vue3";
                             <Link :href="route('profile.edit')">
                                 Permissions
                             </Link>
-                        </button>
-                        <button>
-                            <Link :href="route('profile.edit')">Teams</Link>
                         </button> -->
+                        <button>
+                            <Link href="/settings/teams">Teams</Link>
+                        </button>
                         <Link :href="route('logout')" method="post" as="button"
                             >Log Out</Link
                         >
@@ -81,9 +80,10 @@ import { Link, Head } from "@inertiajs/vue3";
     flex-direction: column;
     background-color: #e4e4e7;
     width: 175px;
-    height: 50%;
+    height: max-content;
     border-radius: 0 4px 4px 0;
-    padding: 24px 16px;
+    padding: 24px 16px 12px;
+    justify-content: flex-start;
 }
 Label {
     font-size: 24px;
