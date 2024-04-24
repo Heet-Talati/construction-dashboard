@@ -18,8 +18,9 @@ class TaskController extends Controller
 
     public function projectTasks($id)
     {
-        $current_user = Auth::user()->id;
-        $tasks = Task::where('project_id', $id)->where('user_id', $current_user)->get();
+        // $current_user = Auth::user()->id;
+        $tasks = Task::where('project_id', $id)->get();
+        // ->where('user_id', $current_user)->get();
         return response()->json($tasks);
     }
 

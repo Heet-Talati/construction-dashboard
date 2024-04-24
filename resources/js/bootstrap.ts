@@ -9,3 +9,5 @@ window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 // ).attr("content");
 axios.defaults.withCredentials = true;
 axios.defaults.withXSRFToken = true;
+
+import "./echo";

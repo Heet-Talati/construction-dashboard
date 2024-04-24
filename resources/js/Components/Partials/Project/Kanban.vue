@@ -59,11 +59,13 @@ export default {
         const kanbanData = new DataManager({
             url: `${SERVICE_URI}/project/tasks/${id}`,
             headers: "*",
-            // insertUrl: "/project/tasks/insert",
-            adaptor: new WebApiAdaptor(),
-            // adaptor: new UrlAdaptor(),
+            insertUrl: SERVICE_URI + "/project/tasks/insert",
+            updateUrl: SERVICE_URI + "/project/tasks/update",
+            removeUrl: SERVICE_URI + "/project/tasks/remove",
+            adaptor: new UrlAdaptor(),
+            // adaptor: new WebApiAdaptor(),
             // adaptor: new ODataAdaptor(),
-            crossDomain: false,
+            crossDomain: true,
         });
         console.log(getUrl());
         const cardSettings = {

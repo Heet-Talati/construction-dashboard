@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestController;
 use App\Models\Project;
+use App\Models\Team;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -61,37 +62,37 @@ Route::middleware('auth')->prefix('project/{id}')->group(function () {
 
     Route::get('dashboard', function ($id) {
         if (!canSeeProject($id)) abort(404);
-        if (Project::findOrFail($id) && Project::find($id)->team_id == Auth::user()->id) {
-            return Inertia::render('Project/Dashboard');
-        }
+        // if (Project::findOrFail($id) && Project::find($id)->team_id == Auth::user()->id) {
+        return Inertia::render('Project/Dashboard');
+        // }
     })->name('project.dashboard');
 
     Route::get('tasks', function ($id) {
         if (!canSeeProject($id)) abort(404);
-        if (Project::findOrFail($id) && Project::find($id)->team_id == Auth::user()->id) {
-            return Inertia::render('Project/Tasks');
-        }
+        // if (Project::findOrFail($id) && Project::find($id)->team_id == Auth::user()->id) {
+        return Inertia::render('Project/Tasks');
+        // }
     })->name('project.tasks');
 
     Route::get('chat', function ($id) {
         if (!canSeeProject($id)) abort(404);
-        if (Project::findOrFail($id) && Project::find($id)->team_id == Auth::user()->id) {
-            return Inertia::render('Project/Dashboard');
-        }
+        // if (Project::findOrFail($id) && Project::find($id)->team_id == Auth::user()->id) {
+        return Inertia::render('Project/Chat');
+        // }
     })->name('project.chat');
 
     Route::get('timeline', function ($id) {
         if (!canSeeProject($id)) abort(404);
-        if (Project::findOrFail($id) && Project::find($id)->team_id == Auth::user()->id) {
-            return Inertia::render('Project/Timeline');
-        }
+        // if (Project::findOrFail($id) && Project::find($id)->team_id == Auth::user()->id) {
+        return Inertia::render('Project/Timeline');
+        // }
     })->name('project.timeline');
 
     Route::get('documents', function ($id) {
         if (!canSeeProject($id)) abort(404);
-        if (Project::findOrFail($id) && Project::find($id)->team_id == Auth::user()->id) {
-            return Inertia::render('Project/Documents');
-        }
+        // if (Project::findOrFail($id) && Project::find($id)->team_id == Auth::user()->id) {
+        return Inertia::render('Project/Documents');
+        // }
     })->name('project.documents');
 });
 
@@ -104,15 +105,10 @@ Route::fallback(function () {
 function canSeeProject($id)
 {
     $user = Auth::user()->id;
-    $projects =  Project::where('team_id', $user)->get(['id'])->toJson();
-    $projects = json_decode($projects);
-    $list = array();
+    $teamId = Project::find($id)->team_id;
+    $members = json_decode(Team::find($teamId)->members, true);
 
-    foreach ($projects as $key => $value) {
-        array_push($list, $value->id);
-    }
-
-    return in_array($id, $list);
+    return (in_array($user, $members));
 }
 
 require __DIR__ . '/auth.php';

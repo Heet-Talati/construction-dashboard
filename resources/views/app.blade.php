@@ -21,6 +21,13 @@
             font-weight: 400;
         }
 
+        <?php
+
+        use Illuminate\Support\Facades\Auth;
+
+        if (Auth::user() != null) : ?>
+
+        /*  */
         .left {
             position: fixed;
         }
@@ -30,6 +37,8 @@
             overflow-x: hidden;
             margin-left: 72px;
         }
+
+        <?php endif ?>
     </style>
 
     <!-- Scripts -->

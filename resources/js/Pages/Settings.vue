@@ -3,6 +3,8 @@ import Sidebar from "../../../resources/js/Components/Partials/Main/Sidebar.vue"
 import Header from "../../../resources/js/Components/Partials/Main/Header.vue";
 import Label from "../Components/ui/label/Label.vue";
 import { Link, Head } from "@inertiajs/vue3";
+
+// defineProps<{}>();
 </script>
 
 <template>

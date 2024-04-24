@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,8 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('/project/tasks/{id}', [TaskController::class, 'projectTasks'])->middleware('auth:sanctum');
 
 Route::post('/project/tasks/insert', [TaskController::class, 'projectTasksInsert'])->middleware('auth:sanctum')->name('project.task.create');
+Route::put('/project/tasks/update', [TaskController::class, 'projectTasksUpdate'])->middleware('auth:sanctum')->name('project.task.update');
+Route::delete('/project/tasks/remove', [TaskController::class, 'projectTasksDelete'])->middleware('auth:sanctum')->name('project.task.delete');
 
 Route::put('/project/tasks/{id}', [TaskController::class, 'projectTasksUpdate'])->middleware('auth:sanctum');
 // Route::put('/project/tasks/{id}/{task_id}', [TaskController::class, 'projectTasks'])->middleware('auth:sanctum');
@@ -39,3 +42,6 @@ Route::post('/teams/new', [TeamController::class, 'newTeam'])->name('teams.new')
 Route::post('/teams/add', [TeamController::class, 'addMember'])->middleware('auth:sanctum')->name('member.add');
 Route::post('/teams/remove', [TeamController::class, 'removeMember'])->middleware('auth:sanctum')->name('member.remove');
 Route::get('/teams', [TeamController::class, 'all'])->middleware('auth:sanctum')->name('teams.get');
+
+Route::post('/message/send', [ChatController::class, 'submitMessage'])->middleware('auth:sanctum')->name('message.submit');
+Route::post('/message/get', [ChatController::class, 'mount'])->middleware('auth:sanctum')->name('message.get');

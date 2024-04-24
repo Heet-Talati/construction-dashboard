@@ -3,6 +3,15 @@
 import Sidebar from "../../../resources/js/Components/Partials/Main/Sidebar.vue";
 import Header from "../../../resources/js/Components/Partials/Main/Header.vue";
 import { Head } from "@inertiajs/vue3";
+import axios from "axios";
+// axios
+//     .post(route("test", [1]))
+//     .then((res) => {
+//         console.log(res.data);
+//     })
+//     .catch((error) => {
+//         console.error("Error saving changes:", error);
+//     });
 </script>
 
 <!-- <template>
