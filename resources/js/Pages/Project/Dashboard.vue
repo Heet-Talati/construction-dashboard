@@ -19,7 +19,14 @@ import { Head } from "@inertiajs/vue3";
             <Sidebar />
         </div>
         <div class="right">
-            <Header />
+            <div class="top">
+                <Header />
+            </div>
+            <div class="bottom">
+                <h1>
+                    Building dashboard, enough data has not been gathered yet...
+                </h1>
+            </div>
         </div>
     </div>
 </template>
@@ -45,6 +52,18 @@ import { Head } from "@inertiajs/vue3";
     background-color: #ffffff;
 
     display: flex;
+    flex-direction: column;
     justify-content: right;
+}
+.bottom > h1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40%;
+    color: #515156;
+    user-select: none;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    font-size: xx-large;
 }
 </style>

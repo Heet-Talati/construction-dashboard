@@ -13,9 +13,15 @@ import { Head } from "@inertiajs/vue3";
             <Sidebar />
         </div>
         <div class="right">
-            <Header />
+            <div class="top">
+                <Header />
+            </div>
             <div class="bottom">
                 <h1>Chats</h1>
+                <h1>
+                    Personal chat is under development, please use team chat for
+                    project communication...
+                </h1>
             </div>
         </div>
     </div>
@@ -57,5 +63,16 @@ import { Head } from "@inertiajs/vue3";
     font-weight: bold;
     font-size: 32px;
     text-align: left;
+}
+.bottom > h1:last-child {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    color: #515156;
+    user-select: none;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    font-size: xx-large;
 }
 </style>

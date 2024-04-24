@@ -30,6 +30,9 @@ import axios from "axios";
         <div class="right">
             <div class="top">
                 <Header />
+                <h1>
+                    Building dashboard, enough data has not been gathered yet...
+                </h1>
             </div>
             <div class="bottom"></div>
         </div>
@@ -59,5 +62,16 @@ import axios from "axios";
     display: flex;
     flex-direction: column;
     justify-content: right;
+}
+.top > h1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40%;
+    color: #515156;
+    user-select: none;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    font-size: xx-large;
 }
 </style>

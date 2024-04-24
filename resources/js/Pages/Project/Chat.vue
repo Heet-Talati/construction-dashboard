@@ -8,8 +8,15 @@ import { Head } from "@inertiajs/vue3";
 import { onMounted, ref } from "vue";
 import { EarthIcon, User } from "lucide-vue-next";
 import axios from "axios";
+// import "../../echo";
 
-const chatlane = document.querySelector("#chat-container");
+// const chatlane = ref(null);
+// setTimeout(() => {
+//     chatlane.value = document.querySelector("#chat-container");
+//     console.log(chatlane.value.scrollTop);
+//     chatlane.value.scrollTop = 99999;
+//     console.log(chatlane.value.scrollTop);
+// }, 1000);
 
 const getUrl = function () {
     const url = window.location.pathname;
@@ -23,25 +30,32 @@ const project_id: number = getUrl();
 
 const message = ref<string>("");
 const getMessages = ref<any[]>([]);
-// let getMessages: any[] = [];
-let convo = [];
-getMessages.value.forEach((message) => {
-    convo.push({
-        message: message.message,
-        username: message.username,
-        current: message.current,
-    });
-});
-const pushMessage = () => {
-    // axios
-    //     .post(route("message.submit"), {
-    //         msg: message.value,
-    //         project_id: project_id,
-    //     })
-    //     .then((res) => console.log(res));
-    // message.value = "";
+// const convo = ref<any[]>([]);
+// getMessages.value.forEach((message) => {
+//     convo.value.push({
+//         message: message.message,
+//         username: message.username,
+//         current: message.current,
+//     });
+// });
+let refresh = setInterval(function () {
     mount();
-    chatlane?.scroll(chatlane.scrollTop, 999999);
+    let taskurl = window.location.pathname.split("/");
+    if (taskurl[taskurl.length - 1] != "chat") {
+        clearInterval(refresh);
+        console.log("requests stopped");
+    }
+}, 3000);
+
+const pushMessage = () => {
+    axios
+        .post(route("message.submit"), {
+            msg: message.value,
+            project_id: project_id,
+        })
+        .then((res) => console.log(res));
+    message.value = "";
+    mount();
 };
 const mount = () => {
     axios
@@ -51,10 +65,13 @@ const mount = () => {
 
 onMounted(() => {
     mount();
-    chatlane?.scroll(chatlane.scrollTop, 9999);
-    console.log("scrolled");
     window.Echo.channel("project-chat").listen("MessageEvent", (data: any) => {
         console.log("Recieved data", data);
+        getMessages.value.push({
+            message: data.message,
+            username: data.username,
+            // current: message.current,
+        });
     });
 });
 </script>
