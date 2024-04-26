@@ -4,6 +4,27 @@ import Sidebar from "../../../../resources/js/Components/Partials/Project/Sideba
 import Header from "../../../../resources/js/Components/Partials/Project/Header.vue";
 import Timeline from "../../../../resources/js/Components/Partials/Project/Timeline.vue";
 import { Head } from "@inertiajs/vue3";
+import { ref } from "vue";
+
+const tasks = ref({
+    data: [
+        {
+            id: 1,
+            text: "Task #1",
+            start_date: "2024-01-17",
+            duration: 3,
+            progress: 0.6,
+        },
+        {
+            id: 2,
+            text: "Task #2",
+            start_date: "2024-01-20",
+            duration: 3,
+            progress: 0.4,
+        },
+    ],
+    links: [{ id: 1, source: 1, target: 2, type: "0" }],
+});
 </script>
 
 <template>
@@ -19,7 +40,7 @@ import { Head } from "@inertiajs/vue3";
                 <h1>Timeline</h1>
                 <!-- https://www.syncfusion.com/forums/187729/module-edit-is-not-available-in-treegrid-component?reply=z9vPrX -->
                 <!-- There is a breaking issue with the component -->
-                <!-- <Timeline /> -->
+                <Timeline />
             </div>
         </div>
     </div>

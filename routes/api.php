@@ -25,6 +25,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/tasks/{id}', [TaskController::class, 'delete']);
 });
 Route::get('/project/tasks/{id}', [TaskController::class, 'projectTasks'])->middleware('auth:sanctum');
+Route::get('/tasks/dashboardStatuses', [TaskController::class, 'getStatusWordCounts'])->middleware('auth:sanctum')->name('dashboard.statusCount');
+Route::get('/dashboard/teams', [TeamController::class, 'getTeamsWithMemberCount'])->middleware('auth:sanctum')->name('dashboard.teams');
 
 Route::post('/project/tasks/insert', [TaskController::class, 'projectTasksInsert'])->middleware('auth:sanctum')->name('project.task.create');
 Route::put('/project/tasks/update', [TaskController::class, 'projectTasksUpdate'])->middleware('auth:sanctum')->name('project.task.update');

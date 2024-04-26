@@ -61,7 +61,7 @@ import { Link } from "@inertiajs/vue3";
                         </p>
                     </div>
                 </Link>
-                <Link :href="route('chat')">
+                <!-- <Link :href="route('chat')">
                     <div
                         :class="{
                             tabsactive: $page.url === '/chat',
@@ -83,7 +83,7 @@ import { Link } from "@inertiajs/vue3";
                             Chat
                         </p>
                     </div>
-                </Link>
+                </Link> -->
             </div>
         </div>
         <div class="bottom">
@@ -111,7 +111,7 @@ import { Link } from "@inertiajs/vue3";
                         </p>
                     </div>
                 </Link>
-                <Link :href="route('help')">
+                <!-- <Link :href="route('help')">
                     <div
                         :class="{
                             tabsactive: $page.url === '/help',
@@ -133,7 +133,7 @@ import { Link } from "@inertiajs/vue3";
                             Help
                         </p>
                     </div>
-                </Link>
+                </Link> -->
             </div>
         </div>
     </div>

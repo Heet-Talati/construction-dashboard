@@ -170,7 +170,7 @@ if (url) {
                         </p>
                     </div>
                 </Link>
-                <Link :href="route('help')">
+                <!-- <Link :href="route('help')">
                     <div
                         :class="{
                             tabsactive: $page.url === '/help',
@@ -192,7 +192,7 @@ if (url) {
                             Help
                         </p>
                     </div>
-                </Link>
+                </Link> -->
             </div>
         </div>
     </div>

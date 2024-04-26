@@ -16,6 +16,31 @@ class TaskController extends Controller
         return response()->json($tasks);
     }
 
+    public function getStatusWordCounts()
+    {
+        $current_user = Auth::user()->id;
+
+        $tasks = Task::where('user_id', $current_user)->get();
+
+        $statusCounts = [
+            'Open' => 0,
+            'Review' => 0,
+            'Done' => 0,
+            'InProgress' => 0
+        ];
+
+        foreach ($tasks as $task) {
+            foreach ($statusCounts as $word => $count) {
+                if (strpos(strtolower($task->Status), strtolower($word)) !== false) {
+                    $statusCounts[$word]++;
+                }
+            }
+        }
+
+        return response()->json($statusCounts);
+    }
+
+
     public function projectTasks($id)
     {
         // $current_user = Auth::user()->id;

@@ -30,6 +30,30 @@ class TeamController extends Controller
         return response()->json($filteredTeams);
     }
 
+    public function getTeamsWithMemberCount()
+    {
+        $current_user = Auth::user()->id;
+        $teams = Team::all();
+
+        $filteredTeams = [];
+
+        foreach ($teams as $team) {
+            $members = json_decode($team->members);
+            $memberCount = count($members);
+
+            if (in_array($current_user, $members)) {
+                $filteredTeams[] = [
+                    // 'id' => $team->id,
+                    'name' => $team->name,
+                    'count' => $memberCount
+                ];
+            }
+        }
+
+        return response()->json($filteredTeams);
+    }
+
+
     public function newTeam(Request $req)
     {
         $current_user = Auth::user()->id;

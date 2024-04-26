@@ -31,9 +31,9 @@ Route::get('/tasks', function () {
     return Inertia::render('Tasks');
 })->middleware(['auth', 'verified'])->name('tasks');
 
-Route::get('/chat', function () {
-    return Inertia::render('Chat');
-})->middleware(['auth', 'verified'])->name('chat');
+// Route::get('/chat', function () {
+//     return Inertia::render('Chat');
+// })->middleware(['auth', 'verified'])->name('chat');
 
 Route::get('/settings', function () {
     return Redirect::to('settings/profile');
@@ -48,9 +48,9 @@ Route::prefix('/settings')->middleware(['auth', 'verified'])->group(function () 
     })->name('settings.team');
 });
 
-Route::get('/help', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('help');
+// Route::get('/help', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('help');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
